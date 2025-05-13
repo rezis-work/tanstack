@@ -51,6 +51,13 @@ function RootComponent() {
               >
                 Pokemons
               </Link>
+              <Link
+                to="/search"
+                className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                {...activeLinkProps}
+              >
+                Search
+              </Link>
             </div>
           </div>
         </nav>
