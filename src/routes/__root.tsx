@@ -87,6 +87,20 @@ function RootComponent() {
               >
                 Settings
               </Link>
+              <Link
+                to="/first-level"
+                {...activeLinkProps}
+                className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                First Level
+              </Link>
+              <Link
+                to="/layouts/visibleLayout"
+                {...activeLinkProps}
+                className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                Visible Layout
+              </Link>
             </div>
           </div>
         </nav>
