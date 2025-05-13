@@ -1,5 +1,9 @@
-import * as React from "react";
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import {
+  Link,
+  Outlet,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
+import type { AuthContext } from "../hooks/useAuth";
 
 const activeLinkProps = {
   activeProps: {
@@ -11,13 +15,17 @@ const activeLinkProps = {
   },
 };
 
-export const Route = createRootRoute({
+type RouterContext = {
+  authentication: AuthContext;
+};
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
 });
 
 function RootComponent() {
   return (
-    <React.Fragment>
+    <>
       <div className="max-w-6xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-900 py-4">My App</h1>
         <nav className="bg-white shadow-sm">
@@ -58,11 +66,32 @@ function RootComponent() {
               >
                 Search
               </Link>
+              <Link
+                to="/login"
+                className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                {...activeLinkProps}
+              >
+                Login
+              </Link>
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                {...activeLinkProps}
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/settings"
+                className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                {...activeLinkProps}
+              >
+                Settings
+              </Link>
             </div>
           </div>
         </nav>
         <Outlet />
       </div>
-    </React.Fragment>
+    </>
   );
 }
