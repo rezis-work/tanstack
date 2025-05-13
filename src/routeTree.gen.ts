@@ -13,6 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProfileImport } from './routes/profile'
 import { Route as IndexImport } from './routes/index'
+import { Route as PokemonsIndexImport } from './routes/pokemons/index'
+import { Route as PokemonsIdImport } from './routes/pokemons/$id'
 
 // Create/Update Routes
 
@@ -25,6 +27,18 @@ const ProfileRoute = ProfileImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PokemonsIndexRoute = PokemonsIndexImport.update({
+  id: '/pokemons/',
+  path: '/pokemons/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PokemonsIdRoute = PokemonsIdImport.update({
+  id: '/pokemons/$id',
+  path: '/pokemons/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +60,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
+    '/pokemons/$id': {
+      id: '/pokemons/$id'
+      path: '/pokemons/$id'
+      fullPath: '/pokemons/$id'
+      preLoaderRoute: typeof PokemonsIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/pokemons/': {
+      id: '/pokemons/'
+      path: '/pokemons'
+      fullPath: '/pokemons'
+      preLoaderRoute: typeof PokemonsIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +82,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/profile': typeof ProfileRoute
+  '/pokemons/$id': typeof PokemonsIdRoute
+  '/pokemons': typeof PokemonsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/profile': typeof ProfileRoute
+  '/pokemons/$id': typeof PokemonsIdRoute
+  '/pokemons': typeof PokemonsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/profile': typeof ProfileRoute
+  '/pokemons/$id': typeof PokemonsIdRoute
+  '/pokemons/': typeof PokemonsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/profile'
+  fullPaths: '/' | '/profile' | '/pokemons/$id' | '/pokemons'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/profile'
-  id: '__root__' | '/' | '/profile'
+  to: '/' | '/profile' | '/pokemons/$id' | '/pokemons'
+  id: '__root__' | '/' | '/profile' | '/pokemons/$id' | '/pokemons/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProfileRoute: typeof ProfileRoute
+  PokemonsIdRoute: typeof PokemonsIdRoute
+  PokemonsIndexRoute: typeof PokemonsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProfileRoute: ProfileRoute,
+  PokemonsIdRoute: PokemonsIdRoute,
+  PokemonsIndexRoute: PokemonsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +135,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/profile"
+        "/profile",
+        "/pokemons/$id",
+        "/pokemons/"
       ]
     },
     "/": {
@@ -105,6 +145,12 @@ export const routeTree = rootRoute
     },
     "/profile": {
       "filePath": "profile.tsx"
+    },
+    "/pokemons/$id": {
+      "filePath": "pokemons/$id.tsx"
+    },
+    "/pokemons/": {
+      "filePath": "pokemons/index.tsx"
     }
   }
 }
