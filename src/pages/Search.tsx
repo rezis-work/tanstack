@@ -57,7 +57,7 @@ export default function Search() {
                   onChange={(e) => {
                     const newCategories = e.target.checked
                       ? [...categories, category]
-                      : categories.filter((c) => c !== category);
+                      : categories.filter((c: string) => c !== category);
                     updateFilters("categories", newCategories);
                   }}
                   className="h-4 w-4"
